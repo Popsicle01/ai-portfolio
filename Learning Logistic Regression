@@ -1,0 +1,4 @@
+Why does logistic regression use log-loss and not MSE?
+MSE creates a non-convex loss surface for logistic regression, meaning gradient descent can get stuck in local minima and never find the best solution. 
+Log-loss (cross-entropy) is convex for logistic regression — it has one global minimum, so gradient descent always converges correctly. 
+The secondary benefit is that log-loss heavily penalizes confident wrong predictions, which MSE doesn't do as strongly.
