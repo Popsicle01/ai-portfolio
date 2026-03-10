@@ -1,0 +1,29 @@
+1. What did loss.backward() actually do?
+Imagine your model has millions of knobs (weights). After a wrong prediction, you need to know which knobs caused the mistake and by how much.
+loss.backward() does exactly that using the chain rule of calculus. It walks backwards through every operation in your model — from the loss all the way back to 
+the first layer — and computes a gradient for every single weight. A gradient is just a number that says: "if you increase this weight, the loss goes up/down by this much."
+Forward pass:  input → layer1 → layer2 → output → loss
+                                                      ↓
+Backward pass: loss → ∂loss/∂layer2 → ∂loss/∂layer1 → ∂loss/∂weights
+Then optimizer.step() uses those gradients to nudge every weight slightly in the direction that reduces loss. loss.backward() computes the blame. optimizer.step() acts on it.
+The intuition: you got a test wrong. loss.backward() figures out which study habits caused the mistake. optimizer.step() fixes those habits slightly.
+
+2. What is attention_mask preventing?
+When you batch sentences together, shorter ones get padded with zeros to match the longest sentence:
+"I love ML"     → [101, 1045, 2293, 19081, 102,  0,    0,    0   ]
+"Transformers"  → [101, 19081, 102,  0,    0,    0,    0,    0   ]
+                                          ↑ these are fake padding tokens
+Without attention_mask, the model would try to learn from those zeros — treating padding as real words. This corrupts the learning signal completely.
+attention_mask is a parallel array of 1s and 0s:
+[1, 1, 1, 1, 1, 0, 0, 0]  ← 1 = real token, 0 = ignore this
+The model's attention mechanism uses this mask to refuse to look at padding positions during both training and inference. It's like putting a sticky note over 
+irrelevant parts of a page before reading. Why it matters for you specifically: Your GCG adversarial attack worked by carefully choosing which token positions to perturb. 
+The attention mask is part of what determined which positions had real influence on the output — your attack was essentially exploiting the unmasked positions.
+
+3. How is this training loop different from your MS project?
+Great question to sit with. Here's the honest comparison:
+Day 4 LoopYour MS Adversarial ProjectGoalImprove model weights via gradient descentFind input tokens that fool a fixed modelWhat changesModel weights (internal)
+Input text (external)Gradients used forUpdating the modelSelecting which tokens to swapModel stateChanges every stepFrozen — never modifiedLoss directionMinimize it 
+(learn correctly)Maximize it (cause wrong prediction)
+Your MS project ran gradient computation in reverse purpose — instead of using gradients to fix the model, GCG used gradients to find the worst possible input for a 
+frozen model. You weren't training, you were attacking.
