@@ -49,3 +49,17 @@ Epoch 2, Batch 1 sample:
 Epoch 2 complete | Avg Loss: 1.3914
 
 Final Validation Accuracy: 61.00%
+
+
+------------------- Day 6 Learning--------------------------------------------
+Observation: Model misclassified "I am disappointed with my work" as joy.
+
+Hypothesis: Training data likely skewed toward casual social media text. 
+Formal/professional disappointment underrepresented. 
+DistilBERT compression may lose subtle sentiment nuance.
+
+How I'd fix it in production:
+1. Collect domain-specific training examples
+2. Fine-tune on those specific failure cases  
+3. Try a larger model (RoBERTa-large) for edge cases
+4. Add confidence threshold — below 60% confidence → "uncertain"
