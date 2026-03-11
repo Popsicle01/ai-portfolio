@@ -27,3 +27,25 @@ Input text (external)Gradients used forUpdating the modelSelecting which tokens 
 (learn correctly)Maximize it (cause wrong prediction)
 Your MS project ran gradient computation in reverse purpose — instead of using gradients to fix the model, GCG used gradients to find the worst possible input for a 
 frozen model. You weren't training, you were attacking.
+
+
+Ran the finetuning_day4_2 file and found the loss and accuracy as below:
+Epoch 1, Batch 1 sample:
+  Actual:    surprise
+  Predicted: surprise
+  Confidence: 0.211
+  All probs: {'sadness': '0.177', 'joy': '0.183', 'love': '0.141', 'anger': '0.149', 'fear': '0.139', 'surprise': '0.211'}
+  Batch loss: 1.8022
+
+Epoch 1 complete | Avg Loss: 1.6490
+
+Epoch 2, Batch 1 sample:
+  Actual:    joy
+  Predicted: sadness
+  Confidence: 0.277
+  All probs: {'sadness': '0.277', 'joy': '0.275', 'love': '0.111', 'anger': '0.149', 'fear': '0.105', 'surprise': '0.084'}
+  Batch loss: 1.6941
+
+Epoch 2 complete | Avg Loss: 1.3914
+
+Final Validation Accuracy: 61.00%
