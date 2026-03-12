@@ -63,3 +63,20 @@ How I'd fix it in production:
 2. Fine-tune on those specific failure cases  
 3. Try a larger model (RoBERTa-large) for edge cases
 4. Add confidence threshold — below 60% confidence → "uncertain"
+
+
+---------------------------Day 7 Learning k-NN Model ---------------------------------
+Q1. Can you justify why the model performance on training data is deteriorating with increase in the value of k?
+When k is small (e.g., k=1), the model is highly sensitive to the individual points in the dataset. The prediction for each point is based on its closest neighbor, which can lead to highly specific and flexible 
+boundaries. This leads to overfitting on the training data, meaning the model will perform very well on the training set, potentially achieving 100% accuracy. However, it may generalize poorly to unseen data. 
+When k is large, the model starts to take into account more neighbors when making predictions. This has two main consequences:
+
+Smoothing of the Decision Boundary: The decision boundary becomes smoother, which means the model is less sensitive to the noise or fluctuations in the training data.
+Less Specific Predictions: With a larger k, the model considers more neighbors and therefore makes more generalized predictions, which can lead to fewer instances being classified perfectly.
+As a result, the model starts to become less flexible, and its ability to memorize the training data (which can lead to perfect accuracy with small k) is reduced.
+
+Q2. We can see that even the with the optimum values, the KNN model is not performing that well on the given data set. Can you think of the possible reasons for this?
+The weak performance on the model can be due to multiple reasons. 
+1. The KNN model relies entirely on the raw feature space at inference time. If the features do no provide clear boundaries between classes, KNN model cannot compensate through optimization or feature transformation. 
+2. For a high number of weakly correlated features, the number of dimensions increases, the distance between points tend to become more uniform, reducing the discriminative power of KNN. 
+3. The algorithm treats all features equally when computing distances. Hence, weakly correalted features can introduce noise or irrelevant variations in the feature space making it harder for KNN to find meaningful neighbours.
