@@ -80,3 +80,10 @@ The weak performance on the model can be due to multiple reasons.
 1. The KNN model relies entirely on the raw feature space at inference time. If the features do no provide clear boundaries between classes, KNN model cannot compensate through optimization or feature transformation. 
 2. For a high number of weakly correlated features, the number of dimensions increases, the distance between points tend to become more uniform, reducing the discriminative power of KNN. 
 3. The algorithm treats all features equally when computing distances. Hence, weakly correalted features can introduce noise or irrelevant variations in the feature space making it harder for KNN to find meaningful neighbours.
+
+
+RAGS Learning:
+3 steps of RAG completely transparently: retrieve → build prompt → generate. No hidden chain magic. This is exactly how you'd explain RAG in an interview.
+
+Why TinyLlama: It's only 1.1B parameters so it loads fast on Colab CPU, it's a real chat model so it follows instructions well, and it uses a clean prompt format. The answers won't be perfect — small model, small context — but you'll see the full RAG pipeline working end to end.
+One thing to note while it runs: TinyLlama sometimes rambles past the answer. That's a real production problem called output control — in real systems you'd add a stop token or parse the response. 
