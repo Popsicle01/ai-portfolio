@@ -87,3 +87,7 @@ RAGS Learning:
 
 Why TinyLlama: It's only 1.1B parameters so it loads fast on Colab CPU, it's a real chat model so it follows instructions well, and it uses a clean prompt format. The answers won't be perfect — small model, small context — but you'll see the full RAG pipeline working end to end.
 One thing to note while it runs: TinyLlama sometimes rambles past the answer. That's a real production problem called output control — in real systems you'd add a stop token or parse the response. 
+
+
+-------------------------Day 9 Learning Classification Metrix -----------------------------------------
+If training dataset accuracy is more than test dataset accuracy, the the model is memorizing the data, and shows sign of overfitting
